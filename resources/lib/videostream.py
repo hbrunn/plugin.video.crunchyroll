@@ -283,10 +283,10 @@ class VideoStream(Object):
             if "~hmac=" in subtitle_url:
                 # direct url to subtitle
                 subtitles_req = requests.get(subtitle_url, timeout=30)
+                subtitles_req.raise_for_status()
                 # server doesn't set encoding, so requests would use iso8859-1 otherwise
                 subtitles_req.encoding = "utf-8"
                 subtitle_data = subtitles_req.text
-                subtitles_req.raise_for_status()
             else:
                 # api request streams
                 subtitles_req = api.make_request(
